@@ -20,7 +20,7 @@ void setup(){
    String portName = Serial.list()[2]; //change the right number based on your arduino
    serial = new Serial(this, portName, 9600);
    */
-   firstPlant =  new Plant(200, 0.0, 100);
+   firstPlant =  new Plant(50, 0.0, 100);
    /*
    int step = 100;
   for(int i = 0; i < width/step; i++ ) 

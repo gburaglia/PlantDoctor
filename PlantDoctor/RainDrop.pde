@@ -19,6 +19,7 @@ class RainDrop //single rain drop objects
   //draw raindrop
   void draw() {
     noStroke();
+    fill(#89CFF0);
     //rain drop is several overlapping ellipses
     //# of ellipses depends on rain drop size
     for (int i = 2; i < size; i++ ) {

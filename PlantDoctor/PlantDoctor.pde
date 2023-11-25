@@ -18,9 +18,7 @@ void setup(){
    rainArray = new ArrayList<Rain>();
    systemState = 0;
    String portName = Serial.list()[3]; //change the right number based on your arduino
-   println( Serial.list()[3]);
    serial = new Serial(this, portName, 9600);
-   
    firstPlant =  new Plant(0.0, 0.0, 480);
    /*
    int step = 100;
@@ -35,8 +33,7 @@ void setup(){
 }
 
 void draw(){
-  
-  
+ 
   if (serial.available() > 0){  // If data is available, 
     readSerialValue();
   }
@@ -127,13 +124,14 @@ void showNoWaterNeededScreen(){
 void readSerialValue(){
  
     val = serial.readStringUntil('\n');         // read it and store it in val
-    if(val != null){
+     if(val != null){
        if(match(val, ":")!= null)
       {
+        
         valArray = split(val, " ");
-         if(valArray.length > 7){
+         if(valArray.length > 6){
            firstPlant.updateLight(float(valArray[2]));
-           firstPlant.updateHum(float(valArray[7]));
+           firstPlant.updateHum(float(valArray[6]));
         }
       }
     } 

@@ -2,6 +2,7 @@ import processing.serial.*;
 
 Serial serial;  // Create object from Serial class
 String val;     // Data received from the serial port
+String [] valArray;
 PImage welcomeScreen;
 PImage plantScreen;
 int systemState;
@@ -16,11 +17,11 @@ void setup(){
    
    rainArray = new ArrayList<Rain>();
    systemState = 0;
-   /*
-   String portName = Serial.list()[2]; //change the right number based on your arduino
+   String portName = Serial.list()[3]; //change the right number based on your arduino
+   println( Serial.list()[3]);
    serial = new Serial(this, portName, 9600);
-   */
-   firstPlant =  new Plant(50, 0.0, 100);
+   
+   firstPlant =  new Plant(0.0, 0.0, 480);
    /*
    int step = 100;
   for(int i = 0; i < width/step; i++ ) 
@@ -35,17 +36,22 @@ void setup(){
 
 void draw(){
   
-  /*
+  
   if (serial.available() > 0){  // If data is available, 
     readSerialValue();
   }
-  */
+  
   
    if(systemState !=0)
    {
-      
-      showPlantScreen();
-      
+      if(firstPlant.isWaterNeeded())
+     {
+       showPlantScreen("plantScreen.png");
+     }
+      else
+     {
+       showNoWaterNeededScreen();
+     }
    }
    if (systemState ==2)
    {
@@ -72,7 +78,7 @@ void draw(){
      
    }
    timer = timer +1; 
-   println(systemState);
+   //println(systemState);
 }
 
 //creates a rain object each w/ many rain drops
@@ -92,44 +98,43 @@ void mouseClicked()
 {
   if (systemState == 0 & mouseX > 450 & mouseX < 850 & mouseY > 525 & mouseY < 625)
   {
-    showPlantScreen();
+    showPlantScreen("plantScreen.png");
     systemState = 1;
   } 
-  else if (systemState != 0 & mouseX > 100 & mouseX < 400 & mouseY > 0 & mouseY < 100)
+  else if (systemState != 0 & mouseX > 175 & mouseX < 575 & mouseY > 25 & mouseY < 150)
   {
-    showPlantScreen();
+    showNoWaterNeededScreen();
     systemState = 2;
     timer = 0;
   } 
      
 }
 
-void showPlantScreen(){
+void showPlantScreen(String backgroundFile){
   background(255);
-  plantScreen = loadImage("plantScreen.jpg");
+  plantScreen = loadImage(backgroundFile);
   image(plantScreen, 0, 0);
   fill(0);
-  text("Plant Humidity: " + firstPlant.plantLight,width-200,100);
-  text("Plant Light: " + firstPlant.plantLight,width-200,200);
+  textSize(48);
+  text(int(firstPlant.plantHum),width-175,160);
+  text(int(firstPlant.plantLight),width-175,500);
 }
 
 void showNoWaterNeededScreen(){
-  background(255);
+  showPlantScreen("plantScreenNoWater.png");
 }
 
 void readSerialValue(){
-  
+ 
     val = serial.readStringUntil('\n');         // read it and store it in val
-    
     if(val != null){
-      if(match(val, "Humidity:") != null & firstPlant.plantHum != float(val))
+       if(match(val, ":")!= null)
       {
-         firstPlant.updateHum(float(val));
+        valArray = split(val, " ");
+         if(valArray.length > 7){
+           firstPlant.updateLight(float(valArray[2]));
+           firstPlant.updateHum(float(valArray[7]));
+        }
       }
-      else if(match(val, "Light:") != null & firstPlant.plantLight != float(val))
-      {
-        firstPlant.updateLight(float(val));
-      }
-    }
-     
+    } 
 }

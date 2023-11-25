@@ -17,7 +17,7 @@ class Plant
    }
    
    boolean isWaterNeeded(){
-     if(plantHum >= humLimit)
+     if(plantHum <= humLimit)
      {
        return false;
      }

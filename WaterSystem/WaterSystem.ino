@@ -29,7 +29,7 @@ int dryLow = 480;
 int dryHigh = 540;
 
 // The sunlight threshold for brightness
-int lightThreshold = 700;
+int lightThreshold = 200;
 
 void setup(){ // code that only runs once
   // Set pins as outputs
@@ -49,9 +49,9 @@ void loop(){ // code that loops forever
   lightValue = analogRead(photoresistorPin);
 
   // Print the light and moisture sensor readings to the serial monitor
-  Serial.print("Photoresistor value:");
+  Serial.print("Photoresistor value: ");
   Serial.print(lightValue);    
-  Serial.print("  Soil moisture value:");
+  Serial.print(" Soil moisture value: ");
   Serial.println(sensorValue);       
  
   // If the sensor reading is between the wet range values, turn off the motor pump
@@ -60,9 +60,9 @@ void loop(){ // code that loops forever
   }
   // If the sensor reading is between the dry range values, power on the motor pump to water the soil
   else if(sensorValue > dryLow && sensorValue < dryHigh ){ // the soil is dry
-
-    digitalWrite(sensorPower,HIGH);
+    digitalWrite(sensorPower,HIGH);  // turn the pump ON
   }
+   
 
   // If the light value readings is below the threshold, the room is too dark. Otherwise, the sunlight is adequate
    if (lightValue < lightThreshold) {

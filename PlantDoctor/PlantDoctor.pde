@@ -97,6 +97,7 @@ void mouseClicked()
   {
     showPlantScreen("plantScreen.png");
     systemState = 1;
+    serial.write('1');
   } 
   else if (systemState != 0 & mouseX > 175 & mouseX < 575 & mouseY > 25 & mouseY < 150)
   {

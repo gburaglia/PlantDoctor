@@ -17,7 +17,7 @@ void setup(){
    
    rainArray = new ArrayList<Rain>();
    systemState = 0;
-   String portName = Serial.list()[3]; //change the right number based on your arduino
+   String portName = Serial.list()[2]; //change the right number based on your arduino
    serial = new Serial(this, portName, 9600);
    firstPlant =  new Plant(0.0, 0.0, 480);
    /*
@@ -27,7 +27,7 @@ void setup(){
        line(i*step, 0, i*step, height);
        line(0, i*step, width, i*step);
      }
-   */ 
+   */
    timer = millis();
     
 }
@@ -93,7 +93,7 @@ void resetRain()
 
 void mouseClicked()
 {
-  if (systemState == 0 & mouseX > 450 & mouseX < 850 & mouseY > 525 & mouseY < 625)
+  if (systemState == 0 & mouseX > 95 & mouseX < 400 & mouseY > 575 & mouseY < 650)
   {
     showPlantScreen("plantScreen.png");
     systemState = 1;

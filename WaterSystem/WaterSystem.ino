@@ -31,6 +31,8 @@ int dryHigh = 540;
 // The sunlight threshold for brightness
 int lightThreshold = 200;
 
+char pumpState;
+
 void setup(){ // code that only runs once
   // Set pins as outputs
   pinMode(sensorPower,OUTPUT);
@@ -54,14 +56,18 @@ void loop(){ // code that loops forever
   Serial.println(sensorValue);       
  
    if (Serial.available() > 0) {
-    char pumpState = Serial.read();
+    pumpState = Serial.read();
     if (pumpState == '1') {
       digitalWrite(sensorPower,HIGH); 
     } 
     else if (pumpState == '0') {
       digitalWrite(sensorPower,LOW);
     }
+    else {
+       digitalWrite(sensorPower,LOW);
+    }
   }
+
 
   // If the light value readings is below the threshold, the room is too dark. Otherwise, the sunlight is adequate
    if (lightValue < lightThreshold) {
@@ -69,5 +75,5 @@ void loop(){ // code that loops forever
    } else {
     Serial.println("The room has sunlight that is just right for your plant.");
    }
-  
+  //delay(shortDelayTime);
 }

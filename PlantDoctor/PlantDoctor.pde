@@ -33,7 +33,7 @@ void setup(){
    */
    timer = millis();
    timePassed = millis();
-  timeLeft = duration = 10;
+  timeLeft = duration = 3;
     
 }
 
@@ -42,8 +42,34 @@ void draw(){
   if (serial.available() > 0){  // If data is available, 
     readSerialValue();
   }
-  
-  
+  if(systemState == 1)
+  {
+    showPlantScreen("plantScreen.png");
+    serial.write('0'); 
+    delay(1000);
+    timePassed = millis();
+  }
+  else if (systemState==2)
+  {
+    if (timeLeft > 0) {
+      serial.write('1');
+      timeLeft = duration - ((millis() - timePassed)/1000);
+    }
+    else {
+      if(timeLeft ==0)
+      {
+         serial.write('0');
+      }
+      timeLeft = duration;
+      systemState = 1;
+      timePassed = millis();
+    }
+  }
+  else{
+       timePassed = millis();
+    }
+  }
+  /*
    if(systemState !=0)
    {
       if(firstPlant.isWaterNeeded())
@@ -88,7 +114,9 @@ void draw(){
     else {
     serial.write('0'); 
    }
+  
 }
+ */
 
 //creates a rain object each w/ many rain drops
 void createRain()
@@ -112,9 +140,9 @@ void mouseClicked()
   } 
   else if (systemState != 0 & mouseX > 175 & mouseX < 575 & mouseY > 25 & mouseY < 150)
   {
-    showNoWaterNeededScreen();
+    //showNoWaterNeededScreen();
     systemState = 2;
-    timer = 0;
+    //timer = 0;
   } 
      
 }
@@ -147,12 +175,10 @@ void showNoWaterNeededScreen(){
 }
 
 void readSerialValue(){
- 
-    val = serial.readStringUntil('\n');         // read it and store it in val
+    val = serial.readStringUntil('\n'); // read it and store it in val
      if(val != null){
        if(match(val, ":")!= null)
       {
-        
         valArray = split(val, " ");
          if(valArray.length > 6){
            firstPlant.updateLight(float(valArray[2]));

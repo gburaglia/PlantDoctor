@@ -111,10 +111,19 @@ void showPlantScreen(String backgroundFile){
   background(255);
   plantScreen = loadImage(backgroundFile);
   image(plantScreen, 0, 0);
+  screenText();
+  
+}
+void screenText()
+{
   fill(0);
   textSize(48);
   text(int(firstPlant.plantHum),width-175,160);
+   text(firstPlant.assessWaterLevel()),width-175,160);
   text(int(firstPlant.plantLight),width-175,500);
+  
+  
+  
 }
 
 void showNoWaterNeededScreen(){

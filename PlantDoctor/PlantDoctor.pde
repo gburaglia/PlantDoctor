@@ -119,8 +119,12 @@ void screenText()
   fill(0);
   textSize(48);
   text(int(firstPlant.plantHum),width-175,160);
-   text(firstPlant.assessWaterLevel()),width-175,160);
+   
   text(int(firstPlant.plantLight),width-175,500);
+  
+  textSize(32);
+  text(firstPlant.assessWaterLevel(),width-460,200);
+  text(firstPlant.assessLightLevel(),width-390,540);
   
   
   

@@ -45,4 +45,20 @@ class Plant
      {
        return "Just right";
      }
+  }
+  
+  String assessLightLevel(){
+     if(plantLight < 200)
+     {
+       return "Status: Too dark";
+     }
+     else if (plantLight > 600)
+     {
+       return "Status: Too light";
+     }
+     else
+     {
+       return "Status: Just right";
+     }
+  }
 }

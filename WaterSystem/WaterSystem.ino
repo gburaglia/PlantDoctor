@@ -42,7 +42,6 @@ void setup(){ // code that only runs once
 // TODO: Determine which delay time we prefer (short or long)
 void loop(){ // code that loops forever
   
-  delay(shortDelayTime);
 
   // Take reading from sensors
   sensorValue = analogRead(sensorPin);
@@ -54,15 +53,15 @@ void loop(){ // code that loops forever
   Serial.print(" Soil moisture value: ");
   Serial.println(sensorValue);       
  
-  // If the sensor reading is between the wet range values, turn off the motor pump
-  if(sensorValue > wetLow && sensorValue < wetHigh){ // the soil is wet
-    digitalWrite(sensorPower,LOW);
+   if (Serial.available() > 0) {
+    char pumpState = Serial.read();
+    if (pumpState == '1') {
+      digitalWrite(sensorPower,HIGH); 
+    } 
+    else if (pumpState == '0') {
+      digitalWrite(sensorPower,LOW);
+    }
   }
-  // If the sensor reading is between the dry range values, power on the motor pump to water the soil
-  else if(sensorValue > dryLow && sensorValue < dryHigh ){ // the soil is dry
-    digitalWrite(sensorPower,HIGH);  // turn the pump ON
-  }
-   
 
   // If the light value readings is below the threshold, the room is too dark. Otherwise, the sunlight is adequate
    if (lightValue < lightThreshold) {
@@ -70,8 +69,5 @@ void loop(){ // code that loops forever
    } else {
     Serial.println("The room has sunlight that is just right for your plant.");
    }
- 
-  // Wait before taking next reading
-  delay(longDelayTime);
- 
+  
 }

@@ -35,15 +35,15 @@ class Plant
    String assessWaterLevel(){
      if(plantHum > 480 && plantHum < 540)
      {
-       return "Too dry";
+       return "Status: Too dry";
      }
      else if (plantHum > 200 && plantHum < 240)
      {
-       return "Too wet";
+       return "Status: Too wet";
      }
      else
      {
-       return "Just right";
+       return "Status: Just right";
      }
   }
   

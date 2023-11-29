@@ -9,6 +9,9 @@ int systemState;
 ArrayList<Rain> rainArray;
 Plant firstPlant;
 int timer;
+int duration;
+int timePassed;
+int timeLeft;
 
 void setup(){
    size(1280,800);
@@ -29,6 +32,8 @@ void setup(){
      }
    */
    timer = millis();
+   timePassed = millis();
+  timeLeft = duration = 10;
     
 }
 
@@ -75,7 +80,14 @@ void draw(){
      
    }
    timer = timer +1; 
-   //println(systemState);
+   
+   if(systemState==2 && firstPlant.isWaterNeeded() && timer < 100)
+   {
+     serial.write('1');
+   }
+    else {
+    serial.write('0'); 
+   }
 }
 
 //creates a rain object each w/ many rain drops

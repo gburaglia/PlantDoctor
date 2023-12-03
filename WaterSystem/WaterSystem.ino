@@ -1,6 +1,6 @@
 /*
-  Code for our Automatic Smart Watering system, Plant Doctor,
-  that detects soil moisture and waters the soil as needed based
+  Code for hardware of Plant Doctor,
+  system that detects soil moisture and let's user water the soil as needed based
   on moisture level. Additionally, the code detects the sunlight
   levels of the room and whether the room light is bright enough for 
   the plant. 
@@ -29,7 +29,7 @@ int dryLow = 480;
 int dryHigh = 540;
 
 // The sunlight threshold for brightness
-int lightThreshold = 200;
+int lightThreshold = 500;
 
 char pumpState;
 
@@ -41,10 +41,8 @@ void setup(){ // code that only runs once
   Serial.begin(9600);
 }
 
-// TODO: Determine which delay time we prefer (short or long)
 void loop(){ // code that loops forever
   
-
   // Take reading from sensors
   sensorValue = analogRead(sensorPin);
   lightValue = analogRead(photoresistorPin);
@@ -55,6 +53,8 @@ void loop(){ // code that loops forever
   Serial.print(" Soil moisture value: ");
   Serial.println(sensorValue);       
  
+ // Runs pump only if it receives a 1 from Processing code
+ // The 1 is received when the "Water" button is pressed by user
    if (Serial.available() > 0) {
     pumpState = Serial.read();
     if (pumpState == '1') {
@@ -67,7 +67,6 @@ void loop(){ // code that loops forever
        digitalWrite(sensorPower,LOW);
     }
   }
-
 
   // If the light value readings is below the threshold, the room is too dark. Otherwise, the sunlight is adequate
    if (lightValue < lightThreshold) {

@@ -1,3 +1,13 @@
+/*
+  Code for our UI of Plant Doctor,
+  system that detects soil moisture and let's user water the soil as needed based
+  on moisture level. Additionally, the code detects the sunlight
+  levels of the room and whether the room light is bright enough for 
+  the plant. 
+
+  CS 6452 - Prototyping Interactive Systems
+*/
+
 import processing.serial.*;
 
 Serial serial;  // Create object from Serial class

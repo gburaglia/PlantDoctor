@@ -75,5 +75,4 @@ void loop(){ // code that loops forever
    } else {
     Serial.println("The room has sunlight that is just right for your plant.");
    }
-  //delay(shortDelayTime);
 }

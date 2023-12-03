@@ -6,7 +6,7 @@ class Rain //collection of rain drop objects
     droplets = new RainDrop[numOfDroplets];
     for (int i = 0; i < droplets.length; i = i+1)
     {
-      droplets[i] = new RainDrop(int(random(0,width)),-height/2,random(3,8),random(5,8));
+      droplets[i] = new RainDrop(int(random(0,width)),int(random(-height/2,height/2)),random(5,10),random(5,8));
     }
   }
   

@@ -12,6 +12,7 @@ int timer;
 int duration;
 int timePassed;
 int timeLeft;
+ String portName;
 
 void setup(){
    size(1280,800);
@@ -20,7 +21,7 @@ void setup(){
    
    rainArray = new ArrayList<Rain>();
    systemState = 0;
-   String portName = Serial.list()[2]; //change the right number based on your arduino
+   portName = Serial.list()[2]; //change the right number based on your arduino
    serial = new Serial(this, portName, 9600);
    firstPlant =  new Plant(0.0, 0.0, 480);
    /*
@@ -34,19 +35,24 @@ void setup(){
    timer = millis();
    timePassed = millis();
   timeLeft = duration = 3;
+  createRain();
     
 }
 
 void draw(){
- 
   if (serial.available() > 0){  // If data is available, 
     readSerialValue();
   }
-  if(systemState == 1)
+  if(systemState != 0)
   {
     showPlantScreen("plantScreen.png");
-    serial.write('0'); 
-    delay(1000);
+  }
+  if(systemState == 1)
+  {
+    if(timer % 15==0)
+    {
+      serial.write('0'); 
+    }
     timePassed = millis();
   }
   else if (systemState==2)
@@ -54,6 +60,10 @@ void draw(){
     if (timeLeft > 0) {
       serial.write('1');
       timeLeft = duration - ((millis() - timePassed)/1000);
+       for (Rain rainPart : rainArray)
+      {
+         rainPart.draw();
+      }  
     }
     else {
       if(timeLeft ==0)
@@ -63,6 +73,7 @@ void draw(){
       timeLeft = duration;
       systemState = 1;
       timePassed = millis();
+      resetRain();
     }
   }
   else{
@@ -121,14 +132,18 @@ void draw(){
 //creates a rain object each w/ many rain drops
 void createRain()
 {
-  //each rain object is added to rainArray
-  rainArray.add(new Rain(30));
+  for(int i=0; i<10;i++)
+  {
+    //each rain object is added to rainArray
+    rainArray.add(new Rain(30));
+  }
 }
 
 void resetRain()
 {
   //clear rainArray to start over
   rainArray.clear();
+  createRain();
 }
 
 void mouseClicked()
@@ -140,9 +155,7 @@ void mouseClicked()
   } 
   else if (systemState != 0 & mouseX > 175 & mouseX < 575 & mouseY > 25 & mouseY < 150)
   {
-    //showNoWaterNeededScreen();
     systemState = 2;
-    //timer = 0;
   } 
      
 }

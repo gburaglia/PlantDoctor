@@ -1,13 +1,13 @@
-class RainDrop //single rain drop objects
+class RainDrop // Single rain drop objects
 {
-  //rain drop obj properties
+  // Rain drop obj properties
   float yposition;
   float xposition;
   float size;
   color c;
   float speed;
  
- //rain drop constructor
+ // Rain drop constructor
   RainDrop(int myX, int myY, float mySpeed, float mySize) {
     xposition = myX;
     yposition = myY;
@@ -16,20 +16,19 @@ class RainDrop //single rain drop objects
     speed = mySpeed; 
   }
 
-  //draw raindrop
+  // Draw a single raindrop
   void draw() {
     noStroke();
     fill(#89CFF0);
-    //rain drop is several overlapping ellipses
-    //# of ellipses depends on rain drop size
+    // Rain drop is several overlapping ellipses
+    // # of ellipses depends on rain drop size
     for (int i = 2; i < size; i++ ) {
       ellipse(xposition, yposition + i*4,i*2,i*2);
     }
-    //moves raindrop down the screen
+    // Moves raindrop down the screen at given speed
      yposition += speed;
      
-     //sets raindrop color
+     // Sets raindrop color
      fill(c);
   }
-
 }

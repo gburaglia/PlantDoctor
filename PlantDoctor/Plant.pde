@@ -38,33 +38,33 @@ class Plant // Plant object class
    
    // Returns text description for water level status
    String assessWaterLevel(){
-     if(plantHum > 480 && plantHum < 540)
+     if(plantHum > 480)
      {
-       return "Status: Too dry";
+       return "Dry, needs water";
      }
-     else if (plantHum > 200 && plantHum < 240)
+     else if (plantHum >= 240 && plantHum <= 480)
      {
-       return "Status: Too wet";
+       return "Ideal soil moisture";
      }
      else
      {
-       return "Status: Just right";
+       return "Too wet";
      }
   }
   
   // Returns text description for water level status
   String assessLightLevel(){
-     if(plantLight < 500)
+     if(plantLight > 700)
      {
-       return "Status: Too dark";
+       return "Room is too bright";
      }
-     else if (plantLight > 800)
+     else if (plantLight >= 300 && plantLight <= 700)
      {
-       return "Status: Too light";
+       return "Ideal brightness";
      }
      else
      {
-       return "Status: Just right";
+       return "Room is too dark";
      }
   }
 }

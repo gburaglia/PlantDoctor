@@ -27,6 +27,7 @@ int wetLow = 200;
 int wetHigh = 240; 
 int dryLow = 480;
 int dryHigh = 540;
+int timer;
 
 // The sunlight threshold for brightness
 int lightThreshold = 500;
@@ -39,6 +40,7 @@ void setup(){ // code that only runs once
  
   // Initialize serial communication
   Serial.begin(9600);
+  timer = millis();
 }
 
 void loop(){ // code that loops forever
@@ -47,11 +49,15 @@ void loop(){ // code that loops forever
   sensorValue = analogRead(sensorPin);
   lightValue = analogRead(photoresistorPin);
 
-  // Print the light and moisture sensor readings to the serial monitor
-  Serial.print("Photoresistor value: ");
-  Serial.print(lightValue);    
-  Serial.print(" Soil moisture value: ");
-  Serial.println(sensorValue);       
+  if(timer % 333==0) //To make readings less frequent and not overwhelm the serial monitor
+  {
+    // Print the light and moisture sensor readings to the serial monitor
+    Serial.print("Photoresistor value: ");
+    Serial.print(lightValue);    
+    Serial.print(" Soil moisture value: ");
+    Serial.println(sensorValue);   
+  }
+      
  
  // Runs pump only if it receives a 1 from Processing code
  // The 1 is received when the "Water" button is pressed by user
@@ -64,14 +70,14 @@ void loop(){ // code that loops forever
       digitalWrite(sensorPower,LOW);
     }
     else {
-       digitalWrite(sensorPower,LOW);
+      digitalWrite(sensorPower,LOW);
     }
   }
-
-  // If the light value readings is below the threshold, the room is too dark. Otherwise, the sunlight is adequate
-   if (lightValue < lightThreshold) {
+   //To make readings less frequent and not overwhelm the serial monitor
+   if (lightValue < lightThreshold && timer % 333==0) {
     Serial.println("The room is too dark for your plant");
    } else {
     Serial.println("The room has sunlight that is just right for your plant.");
    }
+   
 }

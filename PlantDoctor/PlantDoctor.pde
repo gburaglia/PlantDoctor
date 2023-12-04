@@ -58,7 +58,7 @@ void draw(){
   
   if(systemState == 1)
   {
-    if(timer % 15==0)
+    if(timer % 75==0)
     {
       serial.write('0'); // Writes 0 to Arduino to keep pump off
     }
@@ -88,6 +88,7 @@ void draw(){
   else{
        timePassed = millis();
     }
+   
 }
 
 // Creates 10 rain object each with 30 rain drops
@@ -118,7 +119,7 @@ void mouseClicked()
     systemState = 1;
   } 
   // On second screen to water the plant
-  else if (systemState != 0 & mouseX > 175 & mouseX < 575 & mouseY > 25 & mouseY < 150)
+  else if (systemState != 0 & mouseX > 125 & mouseX < 535 & mouseY > 625 & mouseY < 750 & firstPlant.isWaterNeeded())
   {
     systemState = 2;
   } 
@@ -141,17 +142,17 @@ void showPlantScreenNoWater(String plantScreenNoWater){
 // Text for plant screen
 void screenText()
 {
-  fill(0);
+  fill(#46594B);
   
   // Printing sensor values to screen
   textSize(48);
-  text(int(firstPlant.plantHum),width-175,160);
-  text(int(firstPlant.plantLight),width-175,500);
+  text(int(firstPlant.plantHum),width-200,636);
+  text(int(firstPlant.plantLight),width-235,738);
   
   // Printing sensor status to screen
-  textSize(32);
-  text(firstPlant.assessWaterLevel(),width-460,200);
-  text(firstPlant.assessLightLevel(),width-390,540);  
+  textSize(24);
+  text(firstPlant.assessWaterLevel(),width-440,665);
+  text(firstPlant.assessLightLevel(),width-440,770);  
 }
 
 void readSerialValue(){

@@ -47,9 +47,13 @@ void draw(){
   }
   
   // As long as value isn't 0, shows next screen
-  if(systemState != 0)
+  if(systemState != 0 & firstPlant.isWaterNeeded()==true)
   {
     showPlantScreen("plantScreen.png");
+  }
+  else if (systemState != 0)
+  {
+    showPlantScreenNoWater("plantScreenWithoutWater.png");
   }
   
   if(systemState == 1)
@@ -128,6 +132,10 @@ void showPlantScreen(String backgroundFile){
   image(plantScreen, 0, 0);
   screenText();
   
+}
+
+void showPlantScreenNoWater(String plantScreenNoWater){
+  showPlantScreen(plantScreenNoWater);
 }
 
 // Text for plant screen
